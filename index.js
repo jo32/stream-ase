@@ -84,5 +84,7 @@ function toTransform(instance) {
 
 module.exports = {
     toTransform: toTransform,
+    toBuffer: toBuffer,
+    toArrayBuffer: toArrayBuffer,
     AES_CBC: AES_CBC
 }
