@@ -2,7 +2,11 @@ var stream = require('stream');
 var Transform = stream.Transform;
 var AES_CBC = require('./src/cbc');
 
+var SUPPORTED_CHUNK_TYPE = [Uint8Array, ArrayBuffer, Buffer];
+
 function toArrayBuffer(buffer) {
+    "use asm";
+
     var ab = new ArrayBuffer(buffer.length);
     var view = new Uint8Array(ab);
     for (var i = 0; i < buffer.length; ++i) {
@@ -12,6 +16,8 @@ function toArrayBuffer(buffer) {
 }
 
 function toBuffer(ab) {
+    "use asm";
+
     var buffer = new Buffer(ab.byteLength);
     var view = new Uint8Array(ab);
     for (var i = 0; i < buffer.length; ++i) {
