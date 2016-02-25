@@ -43,14 +43,20 @@ AES_CBC_Decrypt_prototype.finish = AESModule.AES_Decrypt_finish;
 
 function createEncryptionInstance(options) {
     if ( options.key === undefined ) throw new SyntaxError("key required");
-    var _AES_heap_instance = new Buffer(0x100000);
+    if ( options.chunkSize === undefined ) {
+        options.chunkSize = 0x5000 + chunkSize;
+    } 
+    var _AES_heap_instance = new Buffer(options.chunkSize);
     var _AES_asm_instance  = AES_asm( global, null, _AES_heap_instance.buffer );
     return new AES_CBC_Encrypt( { heap: _AES_heap_instance, asm: _AES_asm_instance, key: options.key, padding: options.padding, iv: options.iv } );
 }
 
 function createDecryptionInstance(options) {
     if ( options.key === undefined ) throw new SyntaxError("key required");
-    var _AES_heap_instance = new Buffer(0x100000);
+    if ( options.chunkSize === undefined ) {
+        options.chunkSize = 0x5000 + chunkSize;
+    } 
+    var _AES_heap_instance = new Buffer(options.chunkSize);
     var _AES_asm_instance  = AES_asm( global, null, _AES_heap_instance.buffer );
     return new AES_CBC_Decrypt( { heap: _AES_heap_instance, asm: _AES_asm_instance, key: options.key, padding: options.padding, iv: options.iv } ); 
 }
