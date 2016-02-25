@@ -44,7 +44,7 @@ AES_CBC_Decrypt_prototype.finish = AESModule.AES_Decrypt_finish;
 function createEncryptionInstance(options) {
     if ( options.key === undefined ) throw new SyntaxError("key required");
     if ( options.chunkSize === undefined ) {
-        options.chunkSize = 0x5000 + chunkSize;
+        options.chunkSize = AES_asm.HEAP_DATA + 0x1000 + chunkSize;
     } 
     var _AES_heap_instance = new Buffer(options.chunkSize);
     var _AES_asm_instance  = AES_asm( global, null, _AES_heap_instance.buffer );
@@ -54,7 +54,7 @@ function createEncryptionInstance(options) {
 function createDecryptionInstance(options) {
     if ( options.key === undefined ) throw new SyntaxError("key required");
     if ( options.chunkSize === undefined ) {
-        options.chunkSize = 0x5000 + chunkSize;
+        options.chunkSize = AES_asm.HEAP_DATA + 0x1000 + chunkSize;
     } 
     var _AES_heap_instance = new Buffer(options.chunkSize);
     var _AES_asm_instance  = AES_asm( global, null, _AES_heap_instance.buffer );
